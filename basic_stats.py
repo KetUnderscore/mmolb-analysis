@@ -61,6 +61,8 @@ def main():
         bb = stats_obj.get("walked", 0)
         hbp = stats_obj.get("hit_by_pitch", 0)
         earned_runs = stats_obj.get("earned_runs", 0)
+        hits_allowed = stats_obj.get("hits_allowed", 0)
+        walks = stats_obj.get("walks", 0)
 
         try:
             ab = stats_obj["at_bats"]
@@ -88,12 +90,13 @@ def main():
             era_str = None
         else:
             era = 9 * earned_runs / ip
+            whip = (walks + hits_allowed) / ip
             ip_str = dot_format(ip)
-            era_str = f"ERA {era:.2f} ({ip_str} IP)"
+            era_str = f"ERA {era:.2f} WHIP {whip:.2f} ({ip_str} IP)"
 
         stats_str = ", ".join(s for s in [ba_str, ops_str, era_str] if s is not None)
         if stats_str:
-            print(player["Position"], player["FirstName"], player["LastName"], stats_str)
+            print(player["Position"], player["FirstName"], player["LastName"], " " * (30 - (len(player["Position"]) + len(player["FirstName"]) + len(player["LastName"]))), stats_str)
 
 
 def dot_format(in_val: float) -> str:
