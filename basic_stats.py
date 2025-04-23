@@ -11,6 +11,9 @@ HTTP_CACHE_DIR = Path("http_cache")
 def stable_str_hash(in_val: str) -> str:
     return hex(int(hashlib.md5(in_val.encode("utf-8")).hexdigest(), 16))[2:]
 
+def stable_str_hash(in_val: str) -> str:
+    return hex(int(hashlib.md5(in_val.encode("utf-8")).hexdigest(), 16))[2:]
+
 def get_json(url: str) -> dict:
     HTTP_CACHE_DIR.mkdir(exist_ok=True)
 
@@ -85,7 +88,7 @@ def main():
             ops_str = f"OBP: {obp:.3f}, SLG: {slg:.3f}, OPS: {ops:.3f} ({pa_str} PA)"
 
         try:
-            ip = stats_obj["batters_faced"] / 3
+            ip = stats_obj["outs"] / 3
         except KeyError:
             era_str = None
         else:
